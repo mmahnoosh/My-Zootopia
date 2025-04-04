@@ -1,7 +1,5 @@
 import json
 
-from animals_web_generator import animals_data
-
 
 def save_animals(animals):
     """
@@ -9,7 +7,7 @@ def save_animals(animals):
     """
     try:
         with open("animals.json", "w", encoding="utf-8") as file:
-            json.dump(animals_data, file, indent=4)
+            json.dump(animals, file, indent=4)
         print("Animal successfully saved!")
     except IOError:
         print("Error: Unable to save the animal.")
@@ -20,26 +18,19 @@ def load_data(file_path):
         return json.load(handle)
 
 
-def create_html():
-    animals_dataset = load_data('animals_data.json')
-    html_template = load_data('animals_template.html')
-    output = []
-    animal_entries = []
-    for animal in animals_dataset:
-        animal_entries.append(f"""
-            <li class="cards__item">
-                <div class="card__title">{animal['name']}</div>
-                <p class="card__text">
-                    <strong>Diet:</strong> {animal['characteristics']['diet']}<br/>
-                    <strong>Location:</strong> {animal['characteristics']['location']}<br/>
-                    <strong>Type:</strong> {animal['characteristics']['type']}<br/>
-                </p>
-            </li>
-        """)
-    animals_html = "\n".join(output)
-    with open('animals_template.html', 'r', encoding='utf-8') as f:
-        html_template = f.read()
+def get_animals_data():
+    return load_data('animals_data.json')
 
-    final_html = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
-    with open('animals.html', 'w', encoding='utf-8') as f:
-        f.write(final_html)
+def serialize_animal(animal):
+    locations = ", ".join(animal['locations'])
+    animal_type = animal['characteristics'].get('type', '-')
+    return f"""
+          <li class="cards__item">
+              <div class="card__title">{animal['name']}</div>
+              <p class="card__text">
+                  <strong>Diet:</strong> {animal['characteristics']['diet']}<br/>
+                  <strong>Location:</strong> {locations}<br/>
+                  <strong>Type:</strong> {animal_type}<br/>
+              </p>
+          </li>
+      """
