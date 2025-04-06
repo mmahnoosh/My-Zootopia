@@ -1,4 +1,33 @@
+import colorama
+from colorama import init, Fore, Back, Style
 import animal_funktions
+
+
+def get_user_input():
+    while True:
+        choice = input(
+            Fore.GREEN + 'Do you want to see all animals or filter them? ("a" for all or "f" for filter): '
+            + Style.RESET_ALL).strip().lower()
+
+        if choice == "a":
+            animal_funktions.show_animals()
+            exit()
+
+        elif choice == "f":
+            skin_types = animal_funktions.show_skin_type()
+            filter_value = input(
+                f"{Fore.LIGHTMAGENTA_EX}Which skin type would you like to see? "
+                f"{Fore.LIGHTYELLOW_EX}{skin_types}"
+            ).strip().capitalize()
+            if filter_value in skin_types:
+                animal_funktions.filter_list(filter_value)
+                exit()
+
+            else:
+                print(Fore.RED + "Invalid skin type. Please try again." + Style.RESET_ALL)
+
+        else:
+            print(Fore.RED + "Invalid input. Please enter 'a' or 'f'." + Style.RESET_ALL)
 
 
 def main():
@@ -10,25 +39,8 @@ def main():
         - Saving the result to a new HTML file
         """
 
-    animals_dataset = animal_funktions.get_animals_data()
-
-    # Create an empty list to store HTML entries for each animal
-    animal_entries = []
-
-    # Loop through each animal and generate the HTML using the serialize function
-    for animal in animals_dataset:
-        animal_entries.append(animal_funktions.serialize_animal(animal))
-
-    # Join all individual animal HTML entries into one big string
-    animals_html = "\n".join(animal_entries)
-
-    with open('animals_template.html', 'r', encoding='utf-8') as f:
-        html_template = f.read()
-
-    final_html = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
-
-    with open('animals.html', 'w', encoding='utf-8') as f:
-        f.write(final_html)
+    autoreset = True
+    get_user_input()
 
 
 if __name__ == "__main__":
