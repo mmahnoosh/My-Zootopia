@@ -26,7 +26,9 @@ def get_user_input():
             .strip().lower())
 
         if choice in "a":
-            animal_funktions.show_animals()
+            filter_valuef = "all"
+            animal_funktions.filter_list(filter_value)
+            #animal_funktions.show_animals()
             exit()
 
         elif choice in "f":

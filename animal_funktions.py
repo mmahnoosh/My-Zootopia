@@ -51,13 +51,13 @@ def serialize_animal(animal):
       """
 
 
-def show_animals():
-    """
+"""def show_animals():
+   
         Generates an HTML file displaying all animals from the dataset.
         This function retrieves a complete dataset of animals, converts each animal entry
         into HTML using the `serialize_animal` function, and inserts the resulting HTML
         into a template file. The final HTML output is saved to a file named 'animals.html'.
-    """
+   
     animals_dataset = get_animals_data()
 
     # Create an empty list to store HTML entries for each animal
@@ -77,7 +77,7 @@ def show_animals():
 
     with open('animals.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
-
+   """
 
 def filter_list(user_filter):
     """
@@ -93,7 +93,7 @@ def filter_list(user_filter):
     animal_entries = []
     animals_dataset = get_animals_data()
     for animal in animals_dataset:
-        if (animal['characteristics']['skin_type']) == user_filter:
+        if (animal['characteristics']['skin_type']) == user_filter or user_filter =="all":
             animal_entries.append(serialize_animal(animal))
 
     # Join all individual animal HTML entries into one big string
@@ -110,17 +110,21 @@ def filter_list(user_filter):
 
 def show_skin_type():
     """
-       Retrieves a set of unique skin types from the animal dataset.
-       This function accesses a dataset of animals, extracts the 'skin_type'
-       value from each animal's 'characteristics', and returns a set of all
-       unique skin types found.
-       Returns:
-           set: A set containing the unique skin types of all animals in the dataset.
-       """
-    animal_skin_type = []
+    Retrieves a set of unique skin types from the animal dataset.
+    This function accesses a dataset of animals, extracts the 'skin_type'
+    value from each animal's 'characteristics' (if present), and returns a set of all
+    unique skin types found.
+
+    Returns:
+        set: A set containing the unique skin types of all animals in the dataset.
+    """
+    animal_skin_type = set()
     animals_dataset = get_animals_data()
     for animal in animals_dataset:
-        animal_skin_type.append(animal['characteristics']['skin_type'])
-    return set(animal_skin_type)
+        skin_type = animal.get('characteristics', {}).get('skin_type')
+        if skin_type:
+            animal_skin_type.add(skin_type)
+    return animal_skin_type
+
 
 
