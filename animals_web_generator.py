@@ -25,13 +25,13 @@ def get_user_input():
             f" {Fore.GREEN}for{Fore.LIGHTMAGENTA_EX} all{Fore.GREEN} or {Fore.LIGHTYELLOW_EX}'f' {Fore.GREEN}for{Fore.LIGHTMAGENTA_EX} filter{Fore.GREEN}): "
             .strip().lower())
 
-        if choice in "a":
-            filter_valuef = "all"
+        if choice == "a":
+            filter_value = "all"
             animal_funktions.filter_list(filter_value)
             #animal_funktions.show_animals()
             exit()
 
-        elif choice in "f":
+        elif choice == "f":
             skin_types = animal_funktions.show_skin_type()
             filter_value = input(
                 f"{Fore.LIGHTMAGENTA_EX}Which skin type would you like to see? "

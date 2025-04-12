@@ -51,52 +51,27 @@ def serialize_animal(animal):
       """
 
 
-"""def show_animals():
-   
-        Generates an HTML file displaying all animals from the dataset.
-        This function retrieves a complete dataset of animals, converts each animal entry
-        into HTML using the `serialize_animal` function, and inserts the resulting HTML
-        into a template file. The final HTML output is saved to a file named 'animals.html'.
-   
-    animals_dataset = get_animals_data()
-
-    # Create an empty list to store HTML entries for each animal
-    animal_entries = []
-
-    # Loop through each animal and generate the HTML using the serialize function
-    for animal in animals_dataset:
-        animal_entries.append(serialize_animal(animal))
-
-    # Join all individual animal HTML entries into one big string
-    animals_html = "\n".join(animal_entries)
-
-    with open('animals_template.html', 'r', encoding='utf-8') as f:
-        html_template = f.read()
-
-    final_html = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
-
-    with open('animals.html', 'w', encoding='utf-8') as f:
-        f.write(final_html)
-   """
-
 def filter_list(user_filter):
     """
-        Filters a list of animals based on a given skin type and generates an HTML file.
-        This function loads a dataset of animals, filters those whose skin type matches
-        the provided `user_filter`, converts them into HTML entries, and replaces a placeholder
-        in an HTML template with the generated animal information. The final HTML content is then
-        written to a file named 'animals.html'.
-        Parameters:
-            user_filter (str): The desired skin type to filter by (e.g., 'fur', 'scales', 'skin').
+    Filters a list of animals based on a given skin type and generates an HTML file.
 
-        """
+    This function loads a dataset of animals and filters those whose skin type matches
+    the provided `user_filter`. It converts the filtered animals into HTML entries,
+    replaces a placeholder in an HTML template with these entries, and writes the
+    final content to a file named 'animals.html'.
+
+    Parameters:
+        user_filter (str): The desired skin type to filter by (e.g., 'fur', 'scales', 'skin').
+                           If set to 'all', no filtering is applied and all animals are included.
+
+    """
     animal_entries = []
     animals_dataset = get_animals_data()
     for animal in animals_dataset:
-        if (animal['characteristics']['skin_type']) == user_filter or user_filter =="all":
+        skin_type = animal.get('characteristics', {}).get('skin_type')
+        if skin_type == user_filter or user_filter == "all":
             animal_entries.append(serialize_animal(animal))
 
-    # Join all individual animal HTML entries into one big string
     animals_html = "\n".join(animal_entries)
 
     with open('animals_template.html', 'r', encoding='utf-8') as f:
