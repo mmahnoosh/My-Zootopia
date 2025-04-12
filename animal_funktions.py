@@ -23,14 +23,21 @@ def get_animals_data():
 
 def serialize_animal(animal):
     """
-        Converts a single animal dictionary into an HTML list item string.
-        Args:
-            animal (dict): A dictionary containing data about one animal,
-                           including its name, locations, and characteristics.
-        Returns:
-            str: A string containing HTML markup representing the animal's information.
-        """
-    locations = ", ".join(animal['locations'])
+    Converts a single animal dictionary into an HTML list item string.
+
+    Args:
+        animal (dict): A dictionary containing information about an animal.
+                       Expected keys include:
+                         - 'name' (str)
+                         - 'locations' (list of str, optional)
+                         - 'characteristics' (dict) with keys like 'diet', 'type',
+                           'skin_type', and 'top_speed'.
+
+    Returns:
+        str: A string of HTML markup representing the animal's information as a list item.
+    """
+    locations_list = animal.get('locations', [])
+    locations = ", ".join(locations_list) if isinstance(locations_list, list) else 'Unknown'
     animal_type = animal['characteristics'].get('type', ' - ')
     animal_skin_type = animal['characteristics'].get('skin_type', ' - ')
     animal_top_speed = animal['characteristics'].get('top_speed', 'Unknown')
