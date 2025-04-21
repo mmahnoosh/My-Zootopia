@@ -114,3 +114,9 @@ def generate_animal_html(user_filter="all"):
     final_html = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
 
     write_html_file(final_html)
+
+def is_skin_type_valid(skin_type):
+    skin_type_template = (animal.get('characteristics', {}).get('skin_type')
+                          for animal in get_animals_data()
+                          if animal.get('characteristics', {}).get('skin_type'))
+    return skin_type in skin_type_template
