@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+
 import animal_funktions
 
 
