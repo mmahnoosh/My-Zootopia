@@ -88,6 +88,18 @@ def filter_list(user_filter):
         f.write(final_html)
 
 
+def load_html_template(template_path='animals_template.html'):
+    """Loads and returns the HTML template as a string."""
+    with open(template_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+
+def write_html_file(content, output_path='animals.html'):
+    """Writes the given content to an HTML file."""
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+
 def generate_animal_html(user_filter="all"):
     animal_entries = []
     animals_dataset = get_animals_data()
@@ -97,10 +109,8 @@ def generate_animal_html(user_filter="all"):
             animal_entries.append(serialize_animal(animal))
 
     animals_html = "\n".join(animal_entries)
-    with open('animals_template.html', 'r', encoding='utf-8') as f:
-        html_template = f.read()
+    html_template = load_html_template()
 
     final_html = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
 
-    with open('animals.html', 'w', encoding='utf-8') as f:
-        f.write(final_html)
+    write_html_file(final_html)
