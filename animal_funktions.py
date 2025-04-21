@@ -115,8 +115,8 @@ def generate_animal_html(user_filter="all"):
 
     write_html_file(final_html)
 
-def is_skin_type_valid(skin_type):
+def is_filter_valid(user_filter):
     skin_type_template = (animal.get('characteristics', {}).get('skin_type')
                           for animal in get_animals_data()
                           if animal.get('characteristics', {}).get('skin_type'))
-    return skin_type in skin_type_template
+    return user_filter in skin_type_template
