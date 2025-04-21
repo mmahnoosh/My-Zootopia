@@ -104,22 +104,3 @@ def generate_animal_html(user_filter="all"):
 
     with open('animals.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
-
-
-"""def show_skin_type():
-    '''
-    Retrieves a set of unique skin types from the animal dataset.
-    This function accesses a dataset of animals, extracts the 'skin_type'
-    value from each animal's 'characteristics' (if present), and returns a set of all
-    unique skin types found.
-
-    Returns:
-        set: A set containing the unique skin types of all animals in the dataset.
-    '''
-    animal_skin_type = set()
-    animals_dataset = get_animals_data()
-    for animal in animals_dataset:
-        skin_type = animal.get('characteristics', {}).get('skin_type')
-        if skin_type:
-            animal_skin_type.add(skin_type)
-    return animal_skin_type"""

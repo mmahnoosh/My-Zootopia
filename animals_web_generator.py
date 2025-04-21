@@ -30,17 +30,10 @@ def get_user_input():
             exit()
 
         elif choice == "f":
-            #skin_types = animal_funktions.show_skin_type()
             filter_value = input(
                 f"{Fore.LIGHTMAGENTA_EX}Which skin type would you like to see? ").strip().capitalize()
-                #f"{Fore.LIGHTYELLOW_EX}{skin_types}"
-
-            #if filter_value in skin_types:
             animal_funktions.generate_animal_html(filter_value)
             exit()
-
-            #else:
-               # print(Fore.RED + "Invalid skin type. Please try again." + Style.RESET_ALL)
 
         else:
             print(Fore.RED + "Invalid input. Please enter 'a' or 'f'." + Style.RESET_ALL)
