@@ -26,9 +26,7 @@ def get_user_input():
             .strip().lower())
 
         if choice == "a":
-            filter_value = "all"
-            animal_funktions.filter_list(filter_value)
-            #animal_funktions.show_animals()
+            animal_funktions.generate_animal_html()
             exit()
 
         elif choice == "f":
@@ -38,7 +36,7 @@ def get_user_input():
                 f"{Fore.LIGHTYELLOW_EX}{skin_types}"
             ).strip().capitalize()
             if filter_value in skin_types:
-                animal_funktions.filter_list(filter_value)
+                animal_funktions.generate_animal_html(filter_value)
                 exit()
 
             else:

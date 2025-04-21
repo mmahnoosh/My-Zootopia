@@ -8,7 +8,7 @@ def load_data(file_path):
         Returns:
             dict or list: The parsed JSON content, depending on the structure of the file.
     """
-    with open(file_path, "r") as handle:
+    with open(file_path, "r", encoding='utf-8') as handle:
         return json.load(handle)
 
 
@@ -38,19 +38,17 @@ def serialize_animal(animal):
     """
     locations_list = animal.get('locations', [])
     locations = ", ".join(locations_list) if isinstance(locations_list, list) else 'Unknown'
-    animal_type = animal['characteristics'].get('type', ' - ')
-    animal_skin_type = animal['characteristics'].get('skin_type', ' - ')
-    animal_top_speed = animal['characteristics'].get('top_speed', 'Unknown')
+    characteristics = animal.get('characteristics', {})
     return f"""
           <li class="cards__item">
               <div class="card__title">{animal['name']}</div>
               <div class="card__text">
                   <ul>
-                      <li><strong>Diet:</strong> {animal['characteristics']['diet']}</li>
+                      <li><strong>Diet:</strong> {characteristics.get('diet', ' - ')}</li>
                       <li><strong>Location:</strong> {locations}</li>
-                      <li><strong>Type:</strong> {animal_type}</li>
-                      <li><strong>skin_type:</strong> {animal_skin_type}</li>
-                      <li><strong>Top_speed:</strong> {animal_top_speed}</li>
+                      <li><strong>Type:</strong> {characteristics.get('type', ' - ')}</li>
+                      <li><strong>Skin type:</strong> {characteristics.get('skin_type', ' - ')}</li>
+                      <li><strong>Top speed:</strong> {characteristics.get('top_speed', 'Unknown')}</li>
 
                   </ul>    
               </div>
@@ -90,6 +88,24 @@ def filter_list(user_filter):
         f.write(final_html)
 
 
+def generate_animal_html(user_filter="all"):
+    animal_entries = []
+    animals_dataset = get_animals_data()
+    for animal in animals_dataset:
+        skin_type = animal.get('characteristics', {}).get('skin_type')
+        if skin_type == user_filter or user_filter == "all":
+            animal_entries.append(serialize_animal(animal))
+
+    animals_html = "\n".join(animal_entries)
+    with open('animals_template.html', 'r', encoding='utf-8') as f:
+        html_template = f.read()
+
+    final_html = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
+
+    with open('animals.html', 'w', encoding='utf-8') as f:
+        f.write(final_html)
+
+
 def show_skin_type():
     """
     Retrieves a set of unique skin types from the animal dataset.
@@ -107,6 +123,3 @@ def show_skin_type():
         if skin_type:
             animal_skin_type.add(skin_type)
     return animal_skin_type
-
-
-
