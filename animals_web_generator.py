@@ -22,7 +22,7 @@ def get_user_input():
     while True:
         choice = input(
             f"{Fore.GREEN} Do you want to see all animals or filter them? ({Fore.LIGHTYELLOW_EX}'a'"
-            f" {Fore.GREEN}for{Fore.LIGHTMAGENTA_EX} all{Fore.GREEN} or {Fore.LIGHTYELLOW_EX}'f' {Fore.GREEN}for{Fore.LIGHTMAGENTA_EX} filter{Fore.GREEN}): "
+            f" {Fore.GREEN}for{Fore.LIGHTMAGENTA_EX} all{Fore.GREEN} or {Fore.LIGHTYELLOW_EX}'f' {Fore.GREEN}for{Fore.LIGHTMAGENTA_EX} filter{Fore.GREEN}):"
             .strip().lower())
 
         if choice == "a":
@@ -36,7 +36,8 @@ def get_user_input():
                 if animal_funktions.is_filter_valid(filter_value):
                     animal_funktions.generate_animal_html(filter_value)
                     exit()
-                print("Skin Type is not valid!")
+                print(f"{Fore.LIGHTRED_EX}Skin Type is not valid!\n"
+                      f"{Fore.LIGHTYELLOW_EX}--------------------------------------")
 
         else:
             print(Fore.RED + "Invalid input. Please enter 'a' or 'f'." + Style.RESET_ALL)
